@@ -44,8 +44,8 @@ class TMDBAPIManager {
                     let title = item["title"].stringValue
                     let overview = item["overview"].stringValue
                     let rate = item["vote_average"].doubleValue
-                    let posterURL = "https://api.themoviedb.org" +  item["poster_path"].stringValue
-                    let backPosterURL = "https://api.themoviedb.org" + item["backdrop_path"].stringValue
+                    let posterURL = url +  item["poster_path"].stringValue
+                    let backPosterURL = url + item["backdrop_path"].stringValue
                     let mediaID = item["id"].intValue
                     let data = Media(title: title, overview: overview, rate: rate, poster: posterURL, backPoster: backPosterURL, ID: mediaID)
                     

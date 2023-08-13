@@ -46,11 +46,12 @@ class MediaCollectionViewCell: UICollectionViewCell {
     }
     
     func designtitleLabel() {
-        titleLabel.font = .systemFont(ofSize: 15)
+        titleLabel.font = .boldSystemFont(ofSize: 15)
     }
     
     func designOverviewLabel() {
         overviewLabel.font = .systemFont(ofSize: 13)
+        overviewLabel.textColor = .lightGray
     }
     
     func designLikeButton() {

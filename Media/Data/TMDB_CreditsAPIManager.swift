@@ -40,7 +40,7 @@ class TMDB_CreditsAPIManager {
                 for item in json["cast"].arrayValue {
                     let name = item["name"].stringValue
                     let character = item["character"].stringValue
-                    let actorImage = item["profile_path"].stringValue
+                    let actorImage = url + item["profile_path"].stringValue
                     let data = Actor(name: name, character: character, actorImage: actorImage)
                     
                     list.append(data)

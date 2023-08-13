@@ -12,9 +12,10 @@ enum MediaDetail: String, CaseIterable {
     case Overview
     case Cast
     
-    var sectionHeader: String {
+    var sectionNum: Int {
         switch self {
-        case .Overview, .Cast: return self.rawValue
+        case .Overview: return 0
+        case .Cast: return 1
         }
     }
 }
@@ -30,8 +31,7 @@ class MediaDetailViewController: UIViewController {
     
     var media: Media?
     var actorList: [Actor] = []
-    let sectionHeader = ["OverView", "Cast"]
-    var setSection = MediaDetail.allCases
+    var sectionNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,6 @@ class MediaDetailViewController: UIViewController {
         detailTableView.dataSource = self
         detailTableView.rowHeight = 200
         
-        connectCell()
         configureLeftBarButtonItem()
         title = "출연/제작"
         
@@ -65,7 +64,13 @@ class MediaDetailViewController: UIViewController {
         backPosterImageView.kf.setImage(with: backPosterURL)
     }
     
-    func connectCell() {
+    func connectOverviewCell() {
+        let nib = UINib(nibName: MediaOverViewTableViewCell.identifier, bundle: nil)
+        
+        detailTableView.register(nib, forCellReuseIdentifier: MediaOverViewTableViewCell.identifier)
+    }
+    
+    func connectCastCell() {
         let nib = UINib(nibName: MediaDetailTableViewCell.identifier, bundle: nil)
         
         detailTableView.register(nib, forCellReuseIdentifier: MediaDetailTableViewCell.identifier)
@@ -84,12 +89,13 @@ class MediaDetailViewController: UIViewController {
 extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return MediaDetail.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return actorList.count
+        sectionNum = section
+        return section == 0 ? 1: actorList.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -98,13 +104,23 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
+        var viewCellIdentifier = ""
         let row = indexPath.row
         
-        cell.configureCell(data: actorList[row])
+        if MediaDetail.allCases[indexPath.section].sectionNum == 0 {
+            connectOverviewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: MediaOverViewTableViewCell.identifier, for: indexPath) as! MediaOverViewTableViewCell
+            
+            cell.configureCell(data: media!)
+            return cell
+        } else {
+            connectCastCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
+            
+            cell.configureCell(data: actorList[row])
+            return cell
+        }
         
-        return cell
     }
     
 }
