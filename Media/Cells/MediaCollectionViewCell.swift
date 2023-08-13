@@ -28,7 +28,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         designtitleLabel()
         designOverviewLabel()
         designLikeButton()
-        mediaImageView.contentMode = .scaleAspectFit
+        mediaImageView.contentMode = .scaleToFill
     }
 
     func designFirstRateLabel() {

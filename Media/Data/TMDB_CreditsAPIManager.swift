@@ -30,6 +30,7 @@ class TMDB_CreditsAPIManager {
     ]
     func callRequest(mediaID: Int, tv: UITableView, resultActor: @escaping ([Actor]) -> Void) {
         let url = "https://api.themoviedb.org/3/movie/\(mediaID)/credits"
+        let imageURL = "https://image.tmdb.org/t/p/w500"
         var list: [Actor] = []
         
         AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseJSON { response in
@@ -40,7 +41,7 @@ class TMDB_CreditsAPIManager {
                 for item in json["cast"].arrayValue {
                     let name = item["name"].stringValue
                     let character = item["character"].stringValue
-                    let actorImage = url + item["profile_path"].stringValue
+                    let actorImage = imageURL + item["profile_path"].stringValue
                     let data = Actor(name: name, character: character, actorImage: actorImage)
                     
                     list.append(data)

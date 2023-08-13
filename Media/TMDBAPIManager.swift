@@ -33,6 +33,7 @@ class TMDBAPIManager {
     ]
     func callRequest(type: Endpoint, time: TimeWindow, cv: UICollectionView, resultMedia: @escaping ([Media]) -> Void) {
         let url = type.requestURL + time.endPoint
+        let imageURL = "https://image.tmdb.org/t/p/w500"
         var list: [Media] = []
         
         AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseJSON { response in
@@ -44,8 +45,8 @@ class TMDBAPIManager {
                     let title = item["title"].stringValue
                     let overview = item["overview"].stringValue
                     let rate = item["vote_average"].doubleValue
-                    let posterURL = url +  item["poster_path"].stringValue
-                    let backPosterURL = url + item["backdrop_path"].stringValue
+                    let posterURL = imageURL +  item["poster_path"].stringValue
+                    let backPosterURL = imageURL + item["backdrop_path"].stringValue
                     let mediaID = item["id"].intValue
                     let data = Media(title: title, overview: overview, rate: rate, poster: posterURL, backPoster: backPosterURL, ID: mediaID)
                     

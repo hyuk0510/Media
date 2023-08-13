@@ -51,8 +51,8 @@ class MediaDetailViewController: UIViewController {
     }
     
     func designTitleLabel() {
-//        titleLabel.textColor =
         titleLabel.font = .boldSystemFont(ofSize: 17)
+        titleLabel.textColor = .white
     }
     
     func configureInfo(data: Media) {
@@ -104,7 +104,6 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var viewCellIdentifier = ""
         let row = indexPath.row
         
         if MediaDetail.allCases[indexPath.section].sectionNum == 0 {
