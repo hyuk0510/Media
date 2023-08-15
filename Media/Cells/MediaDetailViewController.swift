@@ -41,7 +41,7 @@ class MediaDetailViewController: UIViewController {
         
         detailTableView.delegate = self
         detailTableView.dataSource = self
-        detailTableView.rowHeight = 200
+        detailTableView.rowHeight = UIScreen.main.bounds.height / 5
         
         configureLeftBarButtonItem()
         title = "출연/제작"

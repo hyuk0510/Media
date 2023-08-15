@@ -21,6 +21,8 @@ class MediaDetailTableViewCell: UITableViewCell {
         nameLabel.font = .boldSystemFont(ofSize: 15)
         characterLabel.font = .systemFont(ofSize: 13)
         characterLabel.textColor = .lightGray
+        actorImageView.layer.masksToBounds = true
+        actorImageView.layer.cornerRadius = 10
     }
     
     func configureCell(data: Actor) {

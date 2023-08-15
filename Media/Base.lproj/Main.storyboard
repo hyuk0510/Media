@@ -47,9 +47,12 @@
                             <constraint firstItem="NQm-2y-6jy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uOj-CY-RgJ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="USP-i1-ajo"/>
+                    <navigationItem key="navigationItem" id="USP-i1-ajo">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="kop-EJ-cCO"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mediaCollectionView" destination="NQm-2y-6jy" id="oSb-vB-lKH"/>
+                        <outlet property="searchButton" destination="kop-EJ-cCO" id="zPc-rT-HMb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

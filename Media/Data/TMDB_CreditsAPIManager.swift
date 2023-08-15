@@ -45,8 +45,6 @@ class TMDB_CreditsAPIManager {
                     let data = Actor(name: name, character: character, actorImage: actorImage)
                     
                     list.append(data)
-                    
-                    
                 }
                 resultActor(list)
                 tv.reloadData()

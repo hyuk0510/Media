@@ -10,6 +10,11 @@ import Kingfisher
 
 class MediaCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var genreLabel: UILabel!
+    
+    @IBOutlet var backView: UIView!
+    
     @IBOutlet var firstRateLabel: UILabel!
     @IBOutlet var secondRateLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
@@ -23,6 +28,10 @@ class MediaCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        designDateLabel()
+        designGenreLabel()
+        setShadow()
+        setCornerRadius()
         designFirstRateLabel()
         designSecondRateLabel()
         designtitleLabel()
@@ -30,7 +39,31 @@ class MediaCollectionViewCell: UICollectionViewCell {
         designLikeButton()
         mediaImageView.contentMode = .scaleToFill
     }
+    
+    func designDateLabel() {
+        dateLabel.font = .systemFont(ofSize: 12)
+        dateLabel.textColor = .lightGray
+    }
+    
+    func designGenreLabel() {
+        genreLabel.font = .boldSystemFont(ofSize: 15)
+    }
 
+    func setShadow() {
+        backView.layer.shadowColor = UIColor.black.cgColor
+        backView.layer.shadowOffset = .zero
+        backView.layer.shadowRadius = 10
+        backView.layer.shadowOpacity = 0.5
+        backView.clipsToBounds = false
+    }
+    
+    func setCornerRadius() {
+        backView.layer.cornerRadius = 10
+        mediaImageView.layer.cornerRadius = 10
+        mediaImageView.layer.maskedCorners = [.layerMaxXMinYCorner,
+            .layerMinXMinYCorner]
+    }
+    
     func designFirstRateLabel() {
         firstRateLabel.backgroundColor = .systemPurple
         firstRateLabel.textColor = .white
@@ -63,6 +96,8 @@ class MediaCollectionViewCell: UICollectionViewCell {
     func configureCell(data: [Media], index: Int) {
         let url = URL(string: data[index].poster)
         
+        dateLabel.text = data[index].date
+        genreLabel.text = "#" + data[index].genre
         titleLabel.text = data[index].title
         overviewLabel.text = data[index].overview
         secondRateLabel.text = String(format: "%.2f", data[index].rate)

@@ -11,6 +11,9 @@ class MediaViewController: UIViewController {
 
     @IBOutlet var mediaCollectionView: UICollectionView!
     
+    @IBOutlet var searchButton: UIBarButtonItem!
+    
+    let searchBar = UISearchBar()
     var mediaList: [Media] = []
     
     override func viewDidLoad() {
@@ -18,9 +21,11 @@ class MediaViewController: UIViewController {
         
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
+        navigationItem.titleView = searchBar
         
         connectCell()
         designLeftButton()
+        designSearchButton()
         cellLayout()
         TMDBAPIManager.shared.callRequest(type: .all, time: .day, cv: mediaCollectionView) { result in
             self.mediaList = result
@@ -39,17 +44,18 @@ class MediaViewController: UIViewController {
     
     @objc func checkMyList() {
         let vc = storyboard?.instantiateViewController(identifier: MyListViewController.identifier) as! MyListViewController
-        let nav = UINavigationController(rootViewController: vc)
         
         vc.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backToMain))
         
-        nav.modalPresentationStyle = .fullScreen
-
-        present(nav, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func backToMain() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func designSearchButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(checkMyList))
     }
 
     func cellLayout() {
@@ -57,7 +63,7 @@ class MediaViewController: UIViewController {
         let spacing = CGFloat(10)
         let width = UIScreen.main.bounds.width - (spacing * 2)
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: width, height: 300)
+        layout.itemSize = CGSize(width: width, height: 400)
         layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
