@@ -9,12 +9,6 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-struct Actor {
-    let name: String
-    let character: String
-    let actorImage: String
-}
-
 class TMDB_CreditsAPIManager {
     
     static let shared = TMDB_CreditsAPIManager()
@@ -28,30 +22,15 @@ class TMDB_CreditsAPIManager {
     let queryParameters: Parameters = [
         "language": "en-US"
     ]
-    func callRequest(mediaID: Int, tv: UITableView, resultActor: @escaping ([Actor]) -> Void) {
+    func callRequest(mediaID: Int, resultActor: @escaping ([Cast]) -> Void) {
         let url = "https://api.themoviedb.org/3/movie/\(mediaID)/credits"
-        let imageURL = "https://image.tmdb.org/t/p/w500"
-        var list: [Actor] = []
         
-        AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
+        AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseDecodable(of: Actor.self) { response in
                 
-                for item in json["cast"].arrayValue {
-                    let name = item["name"].stringValue
-                    let character = item["character"].stringValue
-                    let actorImage = imageURL + item["profile_path"].stringValue
-                    let data = Actor(name: name, character: character, actorImage: actorImage)
-                    
-                    list.append(data)
-                }
-                resultActor(list)
-                tv.reloadData()
-                
-            case .failure(let error):
-                print(error)
-            }
+            guard let value = response.value else { return }
+            
+            resultActor(value.cast)
         }
+        
     }
 }

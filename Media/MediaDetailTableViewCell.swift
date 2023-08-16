@@ -25,8 +25,9 @@ class MediaDetailTableViewCell: UITableViewCell {
         actorImageView.layer.cornerRadius = 10
     }
     
-    func configureCell(data: Actor) {
-        let url = URL(string: data.actorImage)
+    func configureCell(data: Cast) {
+        let imageURL = "https://image.tmdb.org/t/p/w500"
+        let url = URL(string: imageURL + (data.profilePath ?? ""))
         
         nameLabel.text = data.name
         characterLabel.text = data.character

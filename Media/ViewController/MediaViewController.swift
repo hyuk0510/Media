@@ -14,7 +14,8 @@ class MediaViewController: UIViewController {
     @IBOutlet var searchButton: UIBarButtonItem!
     
     let searchBar = UISearchBar()
-    var mediaList: [Media] = []
+    var mediaResult: [Result] = []
+    var genreResult: [GenreElement] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +28,10 @@ class MediaViewController: UIViewController {
         designLeftButton()
         designSearchButton()
         cellLayout()
-        TMDBAPIManager.shared.callRequest(type: .all, time: .day, cv: mediaCollectionView) { result in
-            self.mediaList = result
+        TMDBAPIManager.shared.callRequest(type: .movie, time: .day) { result, genre in
+            self.mediaResult = result
+            self.genreResult = genre
+            self.mediaCollectionView.reloadData()
         }
     }
     
@@ -74,14 +77,15 @@ class MediaViewController: UIViewController {
 
 extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return mediaList.count
+        
+        return mediaResult.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as! MediaCollectionViewCell
         let row = indexPath.row
         
-        cell.configureCell(data: self.mediaList, index: row)
+        cell.configureCell(data: self.mediaResult, genre: self.genreResult, index: row)
                 
         return cell
     }
@@ -91,7 +95,7 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let nav = UINavigationController(rootViewController: vc)
         let row = indexPath.row
         
-        vc.media = mediaList[row]
+        vc.result = mediaResult[row]
         
         nav.modalPresentationStyle = .fullScreen
 

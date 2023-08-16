@@ -22,7 +22,7 @@ class MediaOverViewTableViewCell: UITableViewCell {
         overviewTextView.font = .systemFont(ofSize: 12)
     }
     
-    func configureCell(data: Media) {
+    func configureCell(data: Result) {
         overviewTextView.text = data.overview
     }
     

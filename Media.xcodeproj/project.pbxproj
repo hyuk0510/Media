@@ -31,6 +31,7 @@
 		D87338492A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */; };
 		D873384C2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D873384A2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift */; };
 		D873384D2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */; };
+		D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A5D0192A8C886C008329BE /* CordableData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMDB_CreditsAPIManager.swift; path = Media/Data/TMDB_CreditsAPIManager.swift; sourceTree = SOURCE_ROOT; };
 		D873384A2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOverViewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaOverViewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
+		D8A5D0192A8C886C008329BE /* CordableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordableData.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		D87338232A861DE600BE6F6A /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				D8A5D0192A8C886C008329BE /* CordableData.swift */,
 				D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */,
 				D87338282A861FDD00BE6F6A /* TMDBAPIManager.swift */,
 				D873382A2A86206100BE6F6A /* URL+Extension.swift */,
@@ -241,6 +244,7 @@
 				D87338102A861DAE00BE6F6A /* AppDelegate.swift in Sources */,
 				D87338272A861E0900BE6F6A /* APIKey.swift in Sources */,
 				D87338292A861FDD00BE6F6A /* TMDBAPIManager.swift in Sources */,
+				D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */,
 				D873384C2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift in Sources */,
 				D873383E2A87D21900BE6F6A /* MyListViewController.swift in Sources */,
 				D87338302A8622BE00BE6F6A /* ReusableViewProtocol.swift in Sources */,

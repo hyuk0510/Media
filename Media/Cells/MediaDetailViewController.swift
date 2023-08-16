@@ -29,14 +29,15 @@ class MediaDetailViewController: UIViewController {
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var backPosterImageView: UIImageView!
     
-    var media: Media?
-    var actorList: [Actor] = []
+    var result: Result!
+    var actorResult: [Cast] = []
     var sectionNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        TMDB_CreditsAPIManager.shared.callRequest(mediaID: media!.ID, tv: detailTableView) { result in self.actorList = result
+        TMDB_CreditsAPIManager.shared.callRequest(mediaID: result.id) { result in self.actorResult = result
+            self.detailTableView.reloadData()
         }
         
         detailTableView.delegate = self
@@ -46,7 +47,7 @@ class MediaDetailViewController: UIViewController {
         configureLeftBarButtonItem()
         title = "출연/제작"
         
-        configureInfo(data: media!)
+        configureInfo(data: result)
         designTitleLabel()
     }
     
@@ -55,9 +56,10 @@ class MediaDetailViewController: UIViewController {
         titleLabel.textColor = .white
     }
     
-    func configureInfo(data: Media) {
-        let posterURL = URL(string: data.poster)
-        let backPosterURL = URL(string: data.backPoster)
+    func configureInfo(data: Result) {
+        let imageURL = "https://image.tmdb.org/t/p/w500"
+        let posterURL = URL(string: imageURL + data.posterPath)
+        let backPosterURL = URL(string: imageURL + data.backdropPath)
         
         titleLabel.text = data.title
         posterImageView.kf.setImage(with: posterURL)
@@ -95,7 +97,7 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         sectionNum = section
-        return section == 0 ? 1: actorList.count
+        return section == 0 ? 1: actorResult.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -110,13 +112,13 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
             connectOverviewCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaOverViewTableViewCell.identifier, for: indexPath) as! MediaOverViewTableViewCell
             
-            cell.configureCell(data: media!)
+            cell.configureCell(data: result)
             return cell
         } else {
             connectCastCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
             
-            cell.configureCell(data: actorList[row])
+            cell.configureCell(data: actorResult[row])
             return cell
         }
         

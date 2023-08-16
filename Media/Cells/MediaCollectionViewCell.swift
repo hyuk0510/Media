@@ -93,14 +93,30 @@ class MediaCollectionViewCell: UICollectionViewCell {
         likeButton.tintColor = .yellow
     }
     
-    func configureCell(data: [Media], index: Int) {
-        let url = URL(string: data[index].poster)
+    func setGenre(data: [Result], genreList: [GenreElement]) -> [String] {
+        var result: [String] = []
         
-        dateLabel.text = data[index].date
-        genreLabel.text = "#" + data[index].genre
+        for item in data {
+            for genre in genreList {
+                if item.genreIDS[0] == genre.id {
+                    result.append(genre.name)
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    func configureCell(data: [Result], genre: [GenreElement], index: Int) {
+        let imageURL = "https://image.tmdb.org/t/p/w500"
+        let url = URL(string: imageURL + data[index].posterPath)
+        let genreList = setGenre(data: data, genreList: genre)
+
+        dateLabel.text = data[index].releaseDate
+        genreLabel.text = "#" + genreList[index]
         titleLabel.text = data[index].title
         overviewLabel.text = data[index].overview
-        secondRateLabel.text = String(format: "%.2f", data[index].rate)
+        secondRateLabel.text = String(format: "%.2f", data[index].voteAverage)
         mediaImageView.kf.setImage(with: url)
     }
 }
