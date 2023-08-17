@@ -44,7 +44,7 @@ class MediaDetailTableViewCell: UITableViewCell {
         let url = URL(string: imageURL + (data.profilePath ?? ""))
         
         nameLabel.text = data.name
-        characterLabel.text = data.character
+        characterLabel.text = data.character ?? data.job
         actorImageView.kf.setImage(with: url)
     }
 }

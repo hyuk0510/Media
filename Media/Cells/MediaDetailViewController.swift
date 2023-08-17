@@ -8,20 +8,14 @@
 import UIKit
 import Kingfisher
 
-enum MediaDetail: String, CaseIterable {
-    case Overview
-    case Cast
-    
-    var sectionNum: Int {
-        switch self {
-        case .Overview: return 0
-        case .Cast: return 1
-        }
-    }
-}
-
 class MediaDetailViewController: UIViewController {
 
+    enum MediaDetail: String, CaseIterable {
+        case Overview
+        case Cast
+        case Crew
+    }
+    
     @IBOutlet var detailTableView: UITableView!
     
     @IBOutlet var titleLabel: UILabel!
@@ -30,13 +24,16 @@ class MediaDetailViewController: UIViewController {
     @IBOutlet var backPosterImageView: UIImageView!
     
     var result: Result!
-    var actorResult: [Cast] = []
-    var sectionNum = 0
+    var castList: [Cast] = []
+    var crewList: [Cast] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        TMDB_CreditsAPIManager.shared.callRequest(mediaID: result.id) { result in self.actorResult = result
+        TMDB_CreditsAPIManager.shared.callRequest(mediaID: result.id) { result in
+            self.castList = result.cast
+            self.crewList = result.crew
+            print(self.crewList)
             self.detailTableView.reloadData()
         }
         
@@ -96,9 +93,13 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        sectionNum = section
-        return section == 0 ? 1: actorResult.count
-    }
+        switch section {
+        case 0: return 1
+        case 1: return castList.count
+        case 2: return crewList.count
+        default: return 0
+        }
+}
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -107,18 +108,25 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
+        let section = indexPath.section
         
-        if MediaDetail.allCases[indexPath.section].sectionNum == 0 {
+        if section == 0 {
             connectOverviewCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaOverViewTableViewCell.identifier, for: indexPath) as! MediaOverViewTableViewCell
             
             cell.configureCell(data: result)
             return cell
+        } else if section == 1 {
+            connectCastCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
+            
+            cell.configureCell(data: castList[row])
+            return cell
         } else {
             connectCastCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
             
-            cell.configureCell(data: actorResult[row])
+            cell.configureCell(data: crewList[row])
             return cell
         }
         

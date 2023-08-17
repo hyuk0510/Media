@@ -22,14 +22,14 @@ class TMDB_CreditsAPIManager {
     let queryParameters: Parameters = [
         "language": "en-US"
     ]
-    func callRequest(mediaID: Int, resultActor: @escaping ([Cast]) -> Void) {
+    func callRequest(mediaID: Int, resultActor: @escaping (Actor) -> Void) {
         let url = "https://api.themoviedb.org/3/movie/\(mediaID)/credits"
         
         AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseDecodable(of: Actor.self) { response in
                 
             guard let value = response.value else { return }
             
-            resultActor(value.cast)
+            resultActor(value)
         }
         
     }
