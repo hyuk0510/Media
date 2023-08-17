@@ -18,9 +18,23 @@ class MediaDetailTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        designLabel()
+        designImageView()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        actorImageView.image = nil
+    }
+    
+    func designLabel() {
         nameLabel.font = .boldSystemFont(ofSize: 15)
         characterLabel.font = .systemFont(ofSize: 13)
         characterLabel.textColor = .lightGray
+    }
+    
+    func designImageView() {
         actorImageView.layer.masksToBounds = true
         actorImageView.layer.cornerRadius = 10
     }

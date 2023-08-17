@@ -28,6 +28,7 @@ class MediaViewController: UIViewController {
         designLeftButton()
         designSearchButton()
         cellLayout()
+        
         TMDBAPIManager.shared.callRequest(type: .movie, time: .day) { result, genre in
             self.mediaResult = result
             self.genreResult = genre
