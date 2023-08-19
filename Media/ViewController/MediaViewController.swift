@@ -13,25 +13,41 @@ class MediaViewController: UIViewController {
     
     @IBOutlet var searchButton: UIBarButtonItem!
     
-    let searchBar = UISearchBar()
     var mediaResult: [Result] = []
     var genreResult: [GenreElement] = []
-    
+    var similarResult: [SimilarResult] = []
+    let segment = UISegmentedControl(items: ["Media", "Similar"])
+    var movieID = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        callRequest()
         mediaCollectionView.delegate = self
         mediaCollectionView.dataSource = self
-        navigationItem.titleView = searchBar
+        
+        configureSegment()
         
         connectCell()
         designLeftButton()
         designSearchButton()
         cellLayout()
         
+    }
+    
+    func callRequest() {
+        let group = DispatchGroup()
+        
+        group.enter()
+        
         TMDBAPIManager.shared.callRequest(type: .movie, time: .day) { result, genre in
-            self.mediaResult = result
-            self.genreResult = genre
+            self.mediaResult.append(contentsOf: result)
+            self.genreResult.append(contentsOf: genre)
+            self.movieID = result[1].id
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
             self.mediaCollectionView.reloadData()
         }
     }
@@ -74,19 +90,34 @@ class MediaViewController: UIViewController {
         
         mediaCollectionView.collectionViewLayout = layout
     }
+    
+    func configureSegment() {
+        navigationItem.titleView = segment
+        segment.selectedSegmentIndex = 0
+
+        segment.addTarget(self, action: #selector(changeSegmentValue(segment:)), for: .valueChanged)
+    }
+    
+    @objc func changeSegmentValue(segment: UISegmentedControl) {
+        TMDBAPIManager.shared.callSimilar(movieID: self.movieID) { similar in
+            self.similarResult.append(contentsOf: similar)
+        }
+        
+        mediaCollectionView.reloadData()
+    }
 }
 
 extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return mediaResult.count
+                
+        return segment.selectedSegmentIndex == 0 ? mediaResult.count : similarResult.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as! MediaCollectionViewCell
         let row = indexPath.row
         
-        cell.configureCell(data: self.mediaResult, genre: self.genreResult, index: row)
+        segment.selectedSegmentIndex == 0 ? cell.configureMediaCell(data: self.mediaResult, genre: self.genreResult, index: row) : cell.configureSimilarCell(data: self.similarResult, genre: self.genreResult, index: row)
                 
         return cell
     }
@@ -95,8 +126,19 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let vc = storyboard?.instantiateViewController(identifier: MediaDetailViewController.identifier) as! MediaDetailViewController
         let nav = UINavigationController(rootViewController: vc)
         let row = indexPath.row
+        var id = 0
+        if segment.selectedSegmentIndex == 0 {
+            id = mediaResult[row].id
+            vc.result = mediaResult[row]
+            self.movieID = id
+            print(self.movieID)
+        } else {
+            id = similarResult[row].id
+            vc.seg = 1
+            vc.similarResult = similarResult[row]
+        }
         
-        vc.result = mediaResult[row]
+        vc.id = id
         
         nav.modalPresentationStyle = .fullScreen
 

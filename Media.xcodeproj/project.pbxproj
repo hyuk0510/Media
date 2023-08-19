@@ -28,7 +28,6 @@
 		D87338412A87E3B600BE6F6A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = D87338402A87E3B600BE6F6A /* Alamofire */; };
 		D87338442A87E3C000BE6F6A /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = D87338432A87E3C000BE6F6A /* SwiftyJSON */; };
 		D87338472A87E3CB00BE6F6A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D87338462A87E3CB00BE6F6A /* Kingfisher */; };
-		D87338492A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */; };
 		D873384C2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D873384A2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift */; };
 		D873384D2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */; };
 		D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A5D0192A8C886C008329BE /* CordableData.swift */; };
@@ -55,7 +54,6 @@
 		D87338392A862DD700BE6F6A /* MediaDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaDetailTableViewCell.swift; path = Media/MediaDetailTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D873383A2A862DD700BE6F6A /* MediaDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MediaDetailTableViewCell.xib; path = Media/MediaDetailTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		D873383D2A87D21900BE6F6A /* MyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyListViewController.swift; path = Media/MyListViewController.swift; sourceTree = SOURCE_ROOT; };
-		D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TMDB_CreditsAPIManager.swift; path = Media/Data/TMDB_CreditsAPIManager.swift; sourceTree = SOURCE_ROOT; };
 		D873384A2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOverViewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaOverViewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		D8A5D0192A8C886C008329BE /* CordableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordableData.swift; sourceTree = SOURCE_ROOT; };
@@ -112,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				D8A5D0192A8C886C008329BE /* CordableData.swift */,
-				D87338482A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift */,
 				D87338282A861FDD00BE6F6A /* TMDBAPIManager.swift */,
 				D873382A2A86206100BE6F6A /* URL+Extension.swift */,
 				D873382C2A8620A500BE6F6A /* Endpoint.swift */,
@@ -251,7 +248,6 @@
 				D87338382A862C3D00BE6F6A /* MediaDetailViewController.swift in Sources */,
 				D87338122A861DAE00BE6F6A /* SceneDelegate.swift in Sources */,
 				D873382B2A86206100BE6F6A /* URL+Extension.swift in Sources */,
-				D87338492A8897E400BE6F6A /* TMDB_CreditsAPIManager.swift in Sources */,
 				D873383B2A862DD700BE6F6A /* MediaDetailTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

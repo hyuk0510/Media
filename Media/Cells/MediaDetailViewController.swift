@@ -23,28 +23,25 @@ class MediaDetailViewController: UIViewController {
     @IBOutlet var posterImageView: UIImageView!
     @IBOutlet var backPosterImageView: UIImageView!
     
+    var seg = 0
+    var id = 0
     var result: Result!
+    var similarResult: SimilarResult!
     var castList: [Cast] = []
     var crewList: [Cast] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        TMDB_CreditsAPIManager.shared.callRequest(mediaID: result.id) { result in
-            self.castList = result.cast
-            self.crewList = result.crew
-            print(self.crewList)
-            self.detailTableView.reloadData()
-        }
-        
+                        
         detailTableView.delegate = self
         detailTableView.dataSource = self
         detailTableView.rowHeight = UIScreen.main.bounds.height / 5
+        callRequest(mediaID: id)
         
+        configureInfo()
         configureLeftBarButtonItem()
         title = "출연/제작"
         
-        configureInfo(data: result)
         designTitleLabel()
     }
     
@@ -53,10 +50,24 @@ class MediaDetailViewController: UIViewController {
         titleLabel.textColor = .white
     }
     
-    func configureInfo(data: Result) {
+    func configureInfo() {
+        seg == 0 ? configureMediaInfo(data: result) : configureSimilarInfo(data: similarResult)
+    }
+    
+    func configureMediaInfo(data: Result) {
         let imageURL = "https://image.tmdb.org/t/p/w500"
         let posterURL = URL(string: imageURL + data.posterPath)
         let backPosterURL = URL(string: imageURL + data.backdropPath)
+        
+        titleLabel.text = data.title
+        posterImageView.kf.setImage(with: posterURL)
+        backPosterImageView.kf.setImage(with: backPosterURL)
+    }
+    
+    func configureSimilarInfo(data: SimilarResult) {
+        let imageURL = "https://image.tmdb.org/t/p/w500"
+        let posterURL = URL(string: imageURL + (data.posterPath ?? ""))
+        let backPosterURL = URL(string: imageURL + (data.backdropPath ?? ""))
         
         titleLabel.text = data.title
         posterImageView.kf.setImage(with: posterURL)
@@ -82,6 +93,14 @@ class MediaDetailViewController: UIViewController {
     
     @objc func closeButtonPressed() {
         dismiss(animated: true)
+    }
+    
+    func callRequest(mediaID: Int) {
+        TMDBAPIManager.shared.callActor(mediaID: mediaID) { result in
+            self.castList = result.cast
+            self.crewList = result.crew
+            self.detailTableView.reloadData()
+        }
     }
 }
 
@@ -114,7 +133,7 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
             connectOverviewCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaOverViewTableViewCell.identifier, for: indexPath) as! MediaOverViewTableViewCell
             
-            cell.configureCell(data: result)
+            seg == 0 ? cell.configureCell(overview: result.overview) : cell.configureCell(overview: similarResult.overview)
             return cell
         } else if section == 1 {
             connectCastCell()
