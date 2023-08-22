@@ -39,15 +39,22 @@ class MediaViewController: UIViewController {
         let group = DispatchGroup()
         
         group.enter()
-        
         TMDBAPIManager.shared.callRequest(type: .movie, time: .day) { result, genre in
             self.mediaResult.append(contentsOf: result)
             self.genreResult.append(contentsOf: genre)
             self.movieID = result[1].id
+            print("requestClear")
+            
+            TMDBAPIManager.shared.callSimilar(movieID: self.movieID) { similar in
+                self.similarResult.append(contentsOf: similar)
+                print("SimilarrequestClear")
+            }
             group.leave()
         }
         
+        
         group.notify(queue: .main) {
+            print("ALLCLEAR")
             self.mediaCollectionView.reloadData()
         }
     }
@@ -99,10 +106,8 @@ class MediaViewController: UIViewController {
     }
     
     @objc func changeSegmentValue(segment: UISegmentedControl) {
-        TMDBAPIManager.shared.callSimilar(movieID: self.movieID) { similar in
-            self.similarResult.append(contentsOf: similar)
-        }
         
+        print("\(movieID)")
         mediaCollectionView.reloadData()
     }
 }

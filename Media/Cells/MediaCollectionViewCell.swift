@@ -18,6 +18,9 @@ class MediaCollectionViewCell: UICollectionViewCell {
     @IBOutlet var firstRateLabel: UILabel!
     @IBOutlet var secondRateLabel: UILabel!
     @IBOutlet var titleLabel: UILabel!
+    
+    @IBOutlet var originalTitleLabel: UILabel!
+    
     @IBOutlet var overviewLabel: UILabel!
     
     @IBOutlet var mediaImageView: UIImageView!
@@ -80,6 +83,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
     
     func designtitleLabel() {
         titleLabel.font = .boldSystemFont(ofSize: 15)
+        originalTitleLabel.font = .systemFont(ofSize: 12)
     }
     
     func designOverviewLabel() {
@@ -120,7 +124,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         
         return result
     }
-    
+
     func configureMediaCell(data: [Result], genre: [GenreElement], index: Int) {
         let imageURL = "https://image.tmdb.org/t/p/w500"
         let url = URL(string: imageURL + data[index].posterPath)
@@ -129,6 +133,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         dateLabel.text = data[index].releaseDate
         genreLabel.text = "#" + genreList[index]
         titleLabel.text = data[index].title
+        originalTitleLabel.text = data[index].originalTitle
         overviewLabel.text = data[index].overview
         secondRateLabel.text = String(format: "%.2f", data[index].voteAverage)
         mediaImageView.kf.setImage(with: url)
@@ -142,6 +147,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         dateLabel.text = data[index].releaseDate
         genreLabel.text = "#" + genreList[index]
         titleLabel.text = data[index].title
+        originalTitleLabel.text = data[index].originalTitle
         overviewLabel.text = data[index].overview
         secondRateLabel.text = String(format: "%.2f", data[index].voteAverage)
         mediaImageView.kf.setImage(with: url)
