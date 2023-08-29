@@ -33,6 +33,10 @@
 		D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A5D0192A8C886C008329BE /* CordableData.swift */; };
 		D8E3B01D2A9A616600717539 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B01C2A9A616600717539 /* IntroViewController.swift */; };
 		D8E3B0282A9A6C7200717539 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D8E3B0272A9A6C7200717539 /* SnapKit */; };
+		D8E3B0612A9CD83700717539 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0602A9CD83700717539 /* BaseViewController.swift */; };
+		D8E3B0C72A9DCFE100717539 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0C62A9DCFE100717539 /* ProfileViewController.swift */; };
+		D8E3B0C92A9DE16100717539 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0C82A9DE16100717539 /* ProfileTableViewCell.swift */; };
+		D8E3B0CC2A9DF44F00717539 /* SettingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +64,10 @@
 		D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaOverViewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		D8A5D0192A8C886C008329BE /* CordableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordableData.swift; sourceTree = SOURCE_ROOT; };
 		D8E3B01C2A9A616600717539 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		D8E3B0602A9CD83700717539 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		D8E3B0C62A9DCFE100717539 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D8E3B0C82A9DE16100717539 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +104,8 @@
 		D873380E2A861DAE00BE6F6A /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				D8E3B0CA2A9DF40700717539 /* Profile */,
+				D8E3B05F2A9CD7A200717539 /* Base */,
 				D8E3B0252A9A649000717539 /* Extension */,
 				D8E3B01E2A9A63D000717539 /* IntroViewController */,
 				D87338362A8627F400BE6F6A /* Protocol */,
@@ -169,6 +179,24 @@
 				D873382A2A86206100BE6F6A /* URL+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		D8E3B05F2A9CD7A200717539 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D8E3B0602A9CD83700717539 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		D8E3B0CA2A9DF40700717539 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				D8E3B0C62A9DCFE100717539 /* ProfileViewController.swift */,
+				D8E3B0C82A9DE16100717539 /* ProfileTableViewCell.swift */,
+				D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,16 +289,20 @@
 				D8E3B01D2A9A616600717539 /* IntroViewController.swift in Sources */,
 				D873382D2A8620A500BE6F6A /* Endpoint.swift in Sources */,
 				D87338332A86262F00BE6F6A /* MediaCollectionViewCell.swift in Sources */,
+				D8E3B0C92A9DE16100717539 /* ProfileTableViewCell.swift in Sources */,
 				D87338142A861DAE00BE6F6A /* MediaViewController.swift in Sources */,
 				D87338102A861DAE00BE6F6A /* AppDelegate.swift in Sources */,
 				D87338272A861E0900BE6F6A /* APIKey.swift in Sources */,
 				D87338292A861FDD00BE6F6A /* TMDBAPIManager.swift in Sources */,
+				D8E3B0C72A9DCFE100717539 /* ProfileViewController.swift in Sources */,
 				D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */,
 				D873384C2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift in Sources */,
 				D873383E2A87D21900BE6F6A /* MyListViewController.swift in Sources */,
 				D87338302A8622BE00BE6F6A /* ReusableViewProtocol.swift in Sources */,
 				D87338382A862C3D00BE6F6A /* MediaDetailViewController.swift in Sources */,
 				D87338122A861DAE00BE6F6A /* SceneDelegate.swift in Sources */,
+				D8E3B0612A9CD83700717539 /* BaseViewController.swift in Sources */,
+				D8E3B0CC2A9DF44F00717539 /* SettingProfileViewController.swift in Sources */,
 				D873382B2A86206100BE6F6A /* URL+Extension.swift in Sources */,
 				D873383B2A862DD700BE6F6A /* MediaDetailTableViewCell.swift in Sources */,
 			);

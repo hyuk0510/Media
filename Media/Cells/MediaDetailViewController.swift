@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class MediaDetailViewController: UIViewController {
+class MediaDetailViewController: BaseViewController {
 
     enum MediaDetail: String, CaseIterable {
         case Overview
@@ -43,6 +43,7 @@ class MediaDetailViewController: UIViewController {
         title = "출연/제작"
         
         designTitleLabel()
+        connectCell()
     }
     
     func designTitleLabel() {
@@ -74,18 +75,14 @@ class MediaDetailViewController: UIViewController {
         backPosterImageView.kf.setImage(with: backPosterURL)
     }
     
-    func connectOverviewCell() {
-        let nib = UINib(nibName: MediaOverViewTableViewCell.identifier, bundle: nil)
+    override func connectCell() {
+        let nib1 = UINib(nibName: MediaOverViewTableViewCell.identifier, bundle: nil)
+        let nib2 = UINib(nibName: MediaDetailTableViewCell.identifier, bundle: nil)
         
-        detailTableView.register(nib, forCellReuseIdentifier: MediaOverViewTableViewCell.identifier)
+        detailTableView.register(nib1, forCellReuseIdentifier: MediaOverViewTableViewCell.identifier)
+        detailTableView.register(nib2, forCellReuseIdentifier: MediaDetailTableViewCell.identifier)
     }
-    
-    func connectCastCell() {
-        let nib = UINib(nibName: MediaDetailTableViewCell.identifier, bundle: nil)
-        
-        detailTableView.register(nib, forCellReuseIdentifier: MediaDetailTableViewCell.identifier)
-    }
-
+   
     func configureLeftBarButtonItem() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonPressed))
         navigationItem.leftBarButtonItem?.tintColor = .black
@@ -130,19 +127,16 @@ extension MediaDetailViewController: UITableViewDelegate, UITableViewDataSource 
         let section = indexPath.section
         
         if section == 0 {
-            connectOverviewCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaOverViewTableViewCell.identifier, for: indexPath) as! MediaOverViewTableViewCell
             
             seg == 0 ? cell.configureCell(overview: result.overview) : cell.configureCell(overview: similarResult.overview)
             return cell
         } else if section == 1 {
-            connectCastCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
             
             cell.configureCell(data: castList[row])
             return cell
         } else {
-            connectCastCell()
             let cell = tableView.dequeueReusableCell(withIdentifier: MediaDetailTableViewCell.identifier, for: indexPath) as! MediaDetailTableViewCell
             
             cell.configureCell(data: crewList[row])

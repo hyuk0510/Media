@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MediaViewController: UIViewController {
+class MediaViewController: BaseViewController {
 
     @IBOutlet var mediaCollectionView: UICollectionView!
     
@@ -55,7 +55,7 @@ class MediaViewController: UIViewController {
         }
     }
     
-    func connectCell() {
+    override func connectCell() {
         let nib = UINib(nibName: MediaCollectionViewCell.identifier, bundle: nil)
         
         mediaCollectionView.register(nib, forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
@@ -131,7 +131,6 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
             id = mediaResult[row].id
             vc.result = mediaResult[row]
             self.movieID = id
-            print(self.movieID)
         } else {
             id = similarResult[row].id
             vc.seg = 1

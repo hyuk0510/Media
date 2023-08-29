@@ -21,8 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let isFirstLaunched = UserDefaults.standard.bool(forKey: "isFirstLaunched")
         if isFirstLaunched == true {
-            let sb = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(identifier: MediaViewController.identifier) as! MediaViewController
+//            let sb = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = sb.instantiateViewController(identifier: MediaViewController.identifier) as! MediaViewController
+            let vc = ProfileViewController()
             let nav = UINavigationController(rootViewController: vc)
             window?.rootViewController = nav
         } else {
