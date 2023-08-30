@@ -51,7 +51,7 @@ class ProfileTableViewCell: UITableViewCell {
     func setConstraints() {
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.leadingMargin.equalTo(contentView).offset(8)
+            make.leadingMargin.equalTo(contentView.snp.leading).offset(8)
         }
         dataLabel.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
@@ -59,7 +59,7 @@ class ProfileTableViewCell: UITableViewCell {
         }
         tableViewImage.snp.makeConstraints { make in
             make.centerY.equalTo(contentView)
-            make.trailingMargin.equalTo(contentView).offset(-8)
+            make.trailingMargin.equalTo(contentView.snp.trailing).offset(-8)
         }
     }
     

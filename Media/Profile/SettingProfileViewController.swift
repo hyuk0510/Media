@@ -11,7 +11,6 @@ import SnapKit
 class SettingProfileViewController: BaseViewController {
     
     var viewTitle = ""
-    var cell: ProfileTableViewCell?
     
     let textField = {
         let view = UITextField()
@@ -21,7 +20,7 @@ class SettingProfileViewController: BaseViewController {
         return view
     }()
     
-    var completionHandler: ((String) -> Void)?
+    var completionHandler: ((String, UIColor) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +44,8 @@ class SettingProfileViewController: BaseViewController {
     }
     
     @objc func okButtonPressed() {
-        cell?.dataLabel.text = textField.text!
-        cell?.dataLabel.textColor = .white
         NotificationCenter.default.post(name: Notification.Name("Data"), object: nil, userInfo: ["data": textField.text!])
-//        completionHandler?(textField.text!)
+        completionHandler?(textField.text!, .white)
         navigationController?.popViewController(animated: true)
     }
     

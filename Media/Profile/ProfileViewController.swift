@@ -10,12 +10,29 @@ import SnapKit
 
 class ProfileViewController: BaseViewController {
     
+    struct Profile {
+        enum Title: String, CaseIterable {
+            case normal
+            case blue
+            
+            var cellTitle: [String] {
+                switch self {
+                case .normal:
+                    return ["이름", "사용자 이름", "성별 대명사", "소개", "링크", "성별"]
+                case .blue:
+                    return ["프로페셔널 계정으로 전환", "개인정보 설정"]
+                }
+            }
+            
+        }
+        
+        static var data = ["이름", "사용자 이름", "성별 대명사", "소개", "링크", "성별"]
+        static var dataColor = UIColor.gray
+    }
+    
     let imageViewSize = CGFloat(80)
     let picker = UIImagePickerController()
     var isProfile = true
-    let profileTitle: [[String]] = [["이름", "사용자 이름", "성별 대명사", "소개"], ["링크", "성별"]]
-    let settingList: [String] = ["프로페셔널 계정으로 전환", "개인정보 설정"]
-    lazy var titleList = profileTitle.flatMap{$0}
     
     let profileImageView = {
         let view = UIImageView()
@@ -71,6 +88,7 @@ class ProfileViewController: BaseViewController {
         title = "프로필 편집"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         
+        profileTableView.rowHeight = 40
         view.addSubview(profileImageView)
         view.addSubview(avatarImageView)
         view.addSubview(changeImageViewButton)
@@ -102,8 +120,8 @@ class ProfileViewController: BaseViewController {
         }
         profileTableView.snp.makeConstraints { make in
             make.top.equalTo(changeImageViewButton.snp.bottom).offset(20)
-            make.height.equalTo(view).multipliedBy(0.5)
-            make.horizontalEdges.equalTo(view)
+            make.height.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.5)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -165,26 +183,22 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return Profile.Title.allCases.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? titleList.count : settingList.count
+        return Profile.Title.allCases[section].cellTitle.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.identifier) as! ProfileTableViewCell
+        cell.titleLabel.text = Profile.Title.allCases[indexPath.section].cellTitle[indexPath.row]
         
-        if indexPath.section == 0 {
-            cell.dataLabel.text = titleList[indexPath.row]
-            cell.titleLabel.text = titleList[indexPath.row]
-            if indexPath.row >= profileTitle[0].count {
-                cell.tableViewImage.image = UIImage(systemName: "chevron.right")
-            }
-            
-        } else {
+        if indexPath.section == 1 {
             cell.titleLabel.textColor = .systemBlue
-            cell.titleLabel.text = settingList[indexPath.row]
+        } else {
+            cell.dataLabel.text = Profile.data[indexPath.row]
+            cell.dataLabel.textColor = Profile.dataColor
         }
                 
         return cell
@@ -192,13 +206,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let cell = tableView.cellForRow(at: indexPath) as! ProfileTableViewCell
             let vc = SettingProfileViewController()
-            vc.viewTitle = titleList[indexPath.row]
-            vc.cell = cell
-            vc.completionHandler = { data in
-                cell.dataLabel.text = data
-                cell.dataLabel.textColor = .white
+            vc.viewTitle = Profile.Title.allCases[indexPath.section].cellTitle[indexPath.row]
+            vc.completionHandler = { data, color in
+                Profile.data[indexPath.row] = data
+                Profile.dataColor = color
+                tableView.reloadRows(at: [indexPath], with: .automatic)
             }
             navigationController?.pushViewController(vc, animated: true)
         }
