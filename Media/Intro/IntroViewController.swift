@@ -57,9 +57,8 @@ class ThirdIntroViewController: UIViewController {
     }
     
     @objc func startButtonPressed() {
-        UserDefaults.standard.set(true, forKey: "isFirstLaunched")
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: MediaViewController.identifier) as! MediaViewController
+        UserDefaults.standard.set(true, forKey: "isNotFirstLaunched")
+        let vc = MediaViewController()
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         

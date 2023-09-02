@@ -20,7 +20,6 @@
 		D873382D2A8620A500BE6F6A /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = D873382C2A8620A500BE6F6A /* Endpoint.swift */; };
 		D87338302A8622BE00BE6F6A /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D873382F2A8622BE00BE6F6A /* ReusableViewProtocol.swift */; };
 		D87338332A86262F00BE6F6A /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87338312A86262F00BE6F6A /* MediaCollectionViewCell.swift */; };
-		D87338342A86262F00BE6F6A /* MediaCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D87338322A86262F00BE6F6A /* MediaCollectionViewCell.xib */; };
 		D87338382A862C3D00BE6F6A /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87338372A862C3D00BE6F6A /* MediaDetailViewController.swift */; };
 		D873383B2A862DD700BE6F6A /* MediaDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87338392A862DD700BE6F6A /* MediaDetailTableViewCell.swift */; };
 		D873383C2A862DD700BE6F6A /* MediaDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D873383A2A862DD700BE6F6A /* MediaDetailTableViewCell.xib */; };
@@ -37,6 +36,10 @@
 		D8E3B0C72A9DCFE100717539 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0C62A9DCFE100717539 /* ProfileViewController.swift */; };
 		D8E3B0C92A9DE16100717539 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0C82A9DE16100717539 /* ProfileTableViewCell.swift */; };
 		D8E3B0CC2A9DF44F00717539 /* SettingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */; };
+		D8E3B0E72AA1C36800717539 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0E62AA1C36800717539 /* BaseView.swift */; };
+		D8E3B0E92AA1C42200717539 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0E82AA1C42200717539 /* BaseCollectionViewCell.swift */; };
+		D8E3B0EB2AA1C4BE00717539 /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0EA2AA1C4BE00717539 /* MediaView.swift */; };
+		D8E3B0EE2AA1DC1D00717539 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E3B0ED2AA1DC1D00717539 /* BaseTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,11 +58,10 @@
 		D873382C2A8620A500BE6F6A /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		D873382F2A8622BE00BE6F6A /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
 		D87338312A86262F00BE6F6A /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
-		D87338322A86262F00BE6F6A /* MediaCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaCollectionViewCell.xib; sourceTree = "<group>"; };
 		D87338372A862C3D00BE6F6A /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaDetailViewController.swift; path = Media/Cells/MediaDetailViewController.swift; sourceTree = SOURCE_ROOT; };
 		D87338392A862DD700BE6F6A /* MediaDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaDetailTableViewCell.swift; path = Media/MediaDetailTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D873383A2A862DD700BE6F6A /* MediaDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MediaDetailTableViewCell.xib; path = Media/MediaDetailTableViewCell.xib; sourceTree = SOURCE_ROOT; };
-		D873383D2A87D21900BE6F6A /* MyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyListViewController.swift; path = Media/MyListViewController.swift; sourceTree = SOURCE_ROOT; };
+		D873383D2A87D21900BE6F6A /* MyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyListViewController.swift; path = Media/MyList/MyListViewController.swift; sourceTree = SOURCE_ROOT; };
 		D873384A2A88DADD00BE6F6A /* MediaOverViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaOverViewTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		D873384B2A88DADD00BE6F6A /* MediaOverViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaOverViewTableViewCell.xib; sourceTree = SOURCE_ROOT; };
 		D8A5D0192A8C886C008329BE /* CordableData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CordableData.swift; sourceTree = SOURCE_ROOT; };
@@ -68,6 +70,10 @@
 		D8E3B0C62A9DCFE100717539 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D8E3B0C82A9DE16100717539 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingProfileViewController.swift; sourceTree = "<group>"; };
+		D8E3B0E62AA1C36800717539 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		D8E3B0E82AA1C42200717539 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		D8E3B0EA2AA1C4BE00717539 /* MediaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
+		D8E3B0ED2AA1DC1D00717539 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,13 +110,14 @@
 		D873380E2A861DAE00BE6F6A /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				D8E3B0EC2AA1C8BD00717539 /* MyList */,
 				D8E3B0CA2A9DF40700717539 /* Profile */,
 				D8E3B05F2A9CD7A200717539 /* Base */,
 				D8E3B0252A9A649000717539 /* Extension */,
-				D8E3B01E2A9A63D000717539 /* IntroViewController */,
+				D8E3B01E2A9A63D000717539 /* Intro */,
 				D87338362A8627F400BE6F6A /* Protocol */,
 				D87338352A86263700BE6F6A /* Cells */,
-				D873382E2A86211500BE6F6A /* ViewController */,
+				D873382E2A86211500BE6F6A /* Media */,
 				D87338232A861DE600BE6F6A /* Data */,
 				D873380F2A861DAE00BE6F6A /* AppDelegate.swift */,
 				D87338112A861DAE00BE6F6A /* SceneDelegate.swift */,
@@ -134,14 +141,14 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		D873382E2A86211500BE6F6A /* ViewController */ = {
+		D873382E2A86211500BE6F6A /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				D873383D2A87D21900BE6F6A /* MyListViewController.swift */,
 				D87338372A862C3D00BE6F6A /* MediaDetailViewController.swift */,
 				D87338132A861DAE00BE6F6A /* MediaViewController.swift */,
+				D8E3B0EA2AA1C4BE00717539 /* MediaView.swift */,
 			);
-			path = ViewController;
+			path = Media;
 			sourceTree = "<group>";
 		};
 		D87338352A86263700BE6F6A /* Cells */ = {
@@ -152,7 +159,6 @@
 				D87338392A862DD700BE6F6A /* MediaDetailTableViewCell.swift */,
 				D873383A2A862DD700BE6F6A /* MediaDetailTableViewCell.xib */,
 				D87338312A86262F00BE6F6A /* MediaCollectionViewCell.swift */,
-				D87338322A86262F00BE6F6A /* MediaCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -165,12 +171,12 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		D8E3B01E2A9A63D000717539 /* IntroViewController */ = {
+		D8E3B01E2A9A63D000717539 /* Intro */ = {
 			isa = PBXGroup;
 			children = (
 				D8E3B01C2A9A616600717539 /* IntroViewController.swift */,
 			);
-			path = IntroViewController;
+			path = Intro;
 			sourceTree = "<group>";
 		};
 		D8E3B0252A9A649000717539 /* Extension */ = {
@@ -185,6 +191,9 @@
 			isa = PBXGroup;
 			children = (
 				D8E3B0602A9CD83700717539 /* BaseViewController.swift */,
+				D8E3B0E62AA1C36800717539 /* BaseView.swift */,
+				D8E3B0E82AA1C42200717539 /* BaseCollectionViewCell.swift */,
+				D8E3B0ED2AA1DC1D00717539 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -197,6 +206,14 @@
 				D8E3B0CB2A9DF44F00717539 /* SettingProfileViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		D8E3B0EC2AA1C8BD00717539 /* MyList */ = {
+			isa = PBXGroup;
+			children = (
+				D873383D2A87D21900BE6F6A /* MyListViewController.swift */,
+			);
+			path = MyList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,7 +287,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D87338252A861DF700BE6F6A /* .gitignore in Resources */,
-				D87338342A86262F00BE6F6A /* MediaCollectionViewCell.xib in Resources */,
 				D873381C2A861DB000BE6F6A /* LaunchScreen.storyboard in Resources */,
 				D87338192A861DB000BE6F6A /* Assets.xcassets in Resources */,
 				D873383C2A862DD700BE6F6A /* MediaDetailTableViewCell.xib in Resources */,
@@ -293,6 +309,8 @@
 				D87338142A861DAE00BE6F6A /* MediaViewController.swift in Sources */,
 				D87338102A861DAE00BE6F6A /* AppDelegate.swift in Sources */,
 				D87338272A861E0900BE6F6A /* APIKey.swift in Sources */,
+				D8E3B0E72AA1C36800717539 /* BaseView.swift in Sources */,
+				D8E3B0E92AA1C42200717539 /* BaseCollectionViewCell.swift in Sources */,
 				D87338292A861FDD00BE6F6A /* TMDBAPIManager.swift in Sources */,
 				D8E3B0C72A9DCFE100717539 /* ProfileViewController.swift in Sources */,
 				D8A5D01A2A8C886C008329BE /* CordableData.swift in Sources */,
@@ -303,6 +321,8 @@
 				D87338122A861DAE00BE6F6A /* SceneDelegate.swift in Sources */,
 				D8E3B0612A9CD83700717539 /* BaseViewController.swift in Sources */,
 				D8E3B0CC2A9DF44F00717539 /* SettingProfileViewController.swift in Sources */,
+				D8E3B0EB2AA1C4BE00717539 /* MediaView.swift in Sources */,
+				D8E3B0EE2AA1DC1D00717539 /* BaseTableViewCell.swift in Sources */,
 				D873382B2A86206100BE6F6A /* URL+Extension.swift in Sources */,
 				D873383B2A862DD700BE6F6A /* MediaDetailTableViewCell.swift in Sources */,
 			);
@@ -456,7 +476,6 @@
 				INFOPLIST_FILE = Media/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -484,7 +503,6 @@
 				INFOPLIST_FILE = Media/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

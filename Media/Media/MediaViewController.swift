@@ -8,10 +8,6 @@
 import UIKit
 
 class MediaViewController: BaseViewController {
-
-    @IBOutlet var mediaCollectionView: UICollectionView!
-    
-    @IBOutlet var searchButton: UIBarButtonItem!
     
     var mediaResult: [Result] = []
     var genreResult: [GenreElement] = []
@@ -19,19 +15,23 @@ class MediaViewController: BaseViewController {
     let segment = UISegmentedControl(items: ["Media", "Similar"])
     var movieID = 0
 
+    let mainView = MediaView()
+    
+    override func loadView() {
+        self.view = mainView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         callRequest()
-        mediaCollectionView.delegate = self
-        mediaCollectionView.dataSource = self
-        
+        mainView.mediaCollectionView.delegate = self
+        mainView.mediaCollectionView.dataSource = self
+
         configureSegment()
         
-        connectCell()
         designLeftButton()
         designSearchButton()
-        cellLayout()
         
     }
     
@@ -51,14 +51,8 @@ class MediaViewController: BaseViewController {
         }
         
         group.notify(queue: .main) {
-            self.mediaCollectionView.reloadData()
+            self.mainView.mediaCollectionView.reloadData()
         }
-    }
-    
-    override func connectCell() {
-        let nib = UINib(nibName: MediaCollectionViewCell.identifier, bundle: nil)
-        
-        mediaCollectionView.register(nib, forCellWithReuseIdentifier: MediaCollectionViewCell.identifier)
     }
     
     func designLeftButton() {
@@ -66,7 +60,7 @@ class MediaViewController: BaseViewController {
     }
     
     @objc func checkMyList() {
-        let vc = storyboard?.instantiateViewController(identifier: MyListViewController.identifier) as! MyListViewController
+        let vc = MyListViewController()
         
         vc.navigationItem.leftBarButtonItem =  UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(backToMain))
         
@@ -78,20 +72,13 @@ class MediaViewController: BaseViewController {
     }
     
     func designSearchButton() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(checkMyList))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person"), style: .plain, target: self, action: #selector(setProfile))
     }
 
-    func cellLayout() {
-        let layout = UICollectionViewFlowLayout()
-        let spacing = CGFloat(10)
-        let width = UIScreen.main.bounds.width - (spacing * 2)
-        layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: width, height: 400)
-        layout.sectionInset = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
+    @objc func setProfile() {
+        let vc = ProfileViewController()
         
-        mediaCollectionView.collectionViewLayout = layout
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureSegment() {
@@ -103,8 +90,9 @@ class MediaViewController: BaseViewController {
     
     @objc func changeSegmentValue(segment: UISegmentedControl) {
         
-        mediaCollectionView.reloadData()
+        mainView.mediaCollectionView.reloadData()
     }
+    
 }
 
 extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -114,7 +102,9 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as! MediaCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.identifier, for: indexPath) as? MediaCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         let row = indexPath.row
         
         segment.selectedSegmentIndex == 0 ? cell.configureMediaCell(data: self.mediaResult, genre: self.genreResult, index: row) : cell.configureSimilarCell(data: self.similarResult, genre: self.genreResult, index: row)
@@ -123,7 +113,8 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = storyboard?.instantiateViewController(identifier: MediaDetailViewController.identifier) as! MediaDetailViewController
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: MediaDetailViewController.identifier) as! MediaDetailViewController
         let nav = UINavigationController(rootViewController: vc)
         let row = indexPath.row
         var id = 0

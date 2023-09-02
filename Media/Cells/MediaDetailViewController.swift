@@ -75,7 +75,7 @@ class MediaDetailViewController: BaseViewController {
         backPosterImageView.kf.setImage(with: backPosterURL)
     }
     
-    override func connectCell() {
+    func connectCell() {
         let nib1 = UINib(nibName: MediaOverViewTableViewCell.identifier, bundle: nil)
         let nib2 = UINib(nibName: MediaDetailTableViewCell.identifier, bundle: nil)
         

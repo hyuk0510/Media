@@ -212,6 +212,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 Profile.data[indexPath.row] = data
                 Profile.dataColor = color
                 tableView.reloadRows(at: [indexPath], with: .automatic)
+                //tableView.reloadData()
             }
             navigationController?.pushViewController(vc, animated: true)
         }
