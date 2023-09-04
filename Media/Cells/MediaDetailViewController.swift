@@ -16,12 +16,31 @@ class MediaDetailViewController: BaseViewController {
         case Crew
     }
     
-    @IBOutlet var detailTableView: UITableView!
+    let backPosterImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleToFill
+        return view
+    }()
     
-    @IBOutlet var titleLabel: UILabel!
+    let titleLabel = {
+        let view = UILabel()
+        return view
+    }()
     
-    @IBOutlet var posterImageView: UIImageView!
-    @IBOutlet var backPosterImageView: UIImageView!
+    let posterImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleToFill
+        return view
+    }()
+    
+    lazy var detailTableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.register(MediaOverViewTableViewCell.self, forCellReuseIdentifier: MediaOverViewTableViewCell.identifier)
+        view.register(MediaDetailTableViewCell.self, forCellReuseIdentifier: MediaDetailTableViewCell.identifier)
+        return view
+    }()
     
     var seg = 0
     var id = 0
@@ -43,7 +62,33 @@ class MediaDetailViewController: BaseViewController {
         title = "출연/제작"
         
         designTitleLabel()
-        connectCell()
+    }
+    
+    override func configureView() {
+        [backPosterImageView, titleLabel, posterImageView, detailTableView].forEach {
+            view.addSubview($0)
+        }
+        view.backgroundColor = .white
+    }
+    
+    override func setConstraints() {
+        backPosterImageView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(view.snp.height).multipliedBy(0.25)
+        }
+        titleLabel.snp.makeConstraints { make in
+            make.top.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+        posterImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(30)
+            make.height.equalTo(backPosterImageView.snp.height).multipliedBy(0.7)
+            make.width.equalTo(backPosterImageView.snp.height).multipliedBy(0.7).multipliedBy(0.6)
+        }
+        detailTableView.snp.makeConstraints { make in
+            make.top.equalTo(backPosterImageView.snp.bottom)
+            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     func designTitleLabel() {
@@ -74,14 +119,6 @@ class MediaDetailViewController: BaseViewController {
         posterImageView.kf.setImage(with: posterURL)
         backPosterImageView.kf.setImage(with: backPosterURL)
     }
-    
-    func connectCell() {
-        let nib1 = UINib(nibName: MediaOverViewTableViewCell.identifier, bundle: nil)
-        let nib2 = UINib(nibName: MediaDetailTableViewCell.identifier, bundle: nil)
-        
-        detailTableView.register(nib1, forCellReuseIdentifier: MediaOverViewTableViewCell.identifier)
-        detailTableView.register(nib2, forCellReuseIdentifier: MediaDetailTableViewCell.identifier)
-    }
    
     func configureLeftBarButtonItem() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(closeButtonPressed))
@@ -93,10 +130,12 @@ class MediaDetailViewController: BaseViewController {
     }
     
     func callRequest(mediaID: Int) {
-        TMDBAPIManager.shared.callActor(mediaID: mediaID) { result in
+        TMDBAPIManager.shared.callCredit(mediaID: mediaID) { result in
             self.castList = result.cast
             self.crewList = result.crew
-            self.detailTableView.reloadData()
+            DispatchQueue.main.async {
+                self.detailTableView.reloadData()
+            }
         }
     }
 }

@@ -15,7 +15,6 @@ class MediaView: BaseView {
         return view
     }()
     
-    
     override func configureView() {
         addSubview(mediaCollectionView)
         backgroundColor = .white

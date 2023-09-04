@@ -163,7 +163,7 @@ class MediaCollectionViewCell: BaseCollectionViewCell {
         
         for item in data {
             for genre in genreList {
-                if item.genreIDS != nil {
+                if !item.genreIDS.isEmpty {
                     if let genreID = item.genreIDS[0], genreID == genre.id {
                         result.append(genre.name)
                     }

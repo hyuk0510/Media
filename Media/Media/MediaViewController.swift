@@ -42,10 +42,11 @@ class MediaViewController: BaseViewController {
         TMDBAPIManager.shared.callRequest(type: .movie, time: .day) { result, genre in
             self.mediaResult.append(contentsOf: result)
             self.genreResult.append(contentsOf: genre)
+            print(genre)
             self.movieID = result[0].id
             
             TMDBAPIManager.shared.callSimilar(movieID: self.movieID) { similar in
-                self.similarResult.append(contentsOf: similar)
+                self.similarResult.append(contentsOf: similar.results)
             }
             group.leave()
         }
@@ -113,8 +114,7 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: MediaDetailViewController.identifier) as! MediaDetailViewController
+        let vc = MediaDetailViewController()
         let nav = UINavigationController(rootViewController: vc)
         let row = indexPath.row
         var id = 0
@@ -122,6 +122,12 @@ extension MediaViewController: UICollectionViewDelegate, UICollectionViewDataSou
             id = mediaResult[row].id
             vc.result = mediaResult[row]
             self.movieID = id
+            
+            similarResult.removeAll()
+            TMDBAPIManager.shared.callSimilar(movieID: id) { similar in
+                self.similarResult.append(contentsOf: similar.results)
+            }
+            
         } else {
             id = similarResult[row].id
             vc.seg = 1

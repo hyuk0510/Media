@@ -60,7 +60,7 @@ enum MediaType: String, Codable {
 
 
 // MARK: - Actor
-struct Actor: Codable {
+struct Credit: Codable {
     let id: Int
     let cast, crew: [Cast]
 }

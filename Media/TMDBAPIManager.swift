@@ -7,13 +7,16 @@
 
 import UIKit
 import Alamofire
-import SwiftyJSON
 
 class TMDBAPIManager {
     static let shared = TMDBAPIManager()
     
     private init() {}
     
+    let scheme = "https"
+    let host = "api.themoviedb.org"
+    let key = "Bearer \(APIKey.TMDBReadToken)"
+
     let headers: HTTPHeaders = [
       "accept": "application/json",
       "Authorization": "Bearer \(APIKey.TMDBReadToken)"
@@ -21,24 +24,50 @@ class TMDBAPIManager {
     let queryParameters: Parameters = [
         "language": "en-US"
     ]
-    let genreParameters: Parameters = [
-        "language": "en"
-    ]
     let similarParameters: Parameters = [
         "language": "en-US",
         "page": 1
     ]
     var genre = ""
     
-    func callGenre(type: Endpoint, genreID: [Int], resultGenre: @escaping ([GenreElement]) -> Void) {
-        let genreURL = "https://api.themoviedb.org/3/genre/\(type)/list"
+    func callGenre(type: Endpoint, genreID: [Int], resultGenre: @escaping (Genre) -> Void) {
+        let path = "/3/genre/\(type)/list"
         
-        AF.request(genreURL, method: .get,parameters: genreParameters, headers: self.headers).validate().responseDecodable(of: Genre.self) { response in
+        var component = URLComponents()
+        component.scheme = scheme
+        component.host = host
+        component.path = path
+        component.queryItems = [
+            URLQueryItem(name: "language", value: "en")
+        ]
+        
+        guard let url = component.url else { return }
+        
+        var requestURL = URLRequest(url: url)
+        
+        requestURL.httpMethod = "GET"
+        requestURL.addValue("application/json", forHTTPHeaderField: "accept")
+        requestURL.addValue(key, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { data, response, error in
             
-            guard let value = response.value else { return }
+            if let _ = error {
+                print("ERROR")
+                return
+            }
             
-            resultGenre(value.genres)
-        }
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                print("SERVER ERROR")
+                return
+            }
+            
+            if let data = data, let genreData = try? JSONDecoder().decode(Genre.self, from: data) {
+                resultGenre(genreData)
+                return
+            }
+            
+        }.resume()
+        
     }
     
     func callRequest(type: Endpoint, time: TimeWindow, resultMedia: @escaping ([Result], [GenreElement]) -> Void) {
@@ -54,30 +83,90 @@ class TMDBAPIManager {
             }
             
             self.callGenre(type: type, genreID: genreID) { response in
-                resultMedia(value.results, response)
+                resultMedia(value.results, response.genres)
             }
 
         }
     }
     
-    func callActor(mediaID: Int, resultActor: @escaping (Actor) -> Void) {
-        let url = "https://api.themoviedb.org/3/movie/\(mediaID)/credits"
+    func callCredit(mediaID: Int, resultCredit: @escaping (Credit) -> Void) {
+        let path = "/3/movie/\(mediaID)/credits"
         
-        AF.request(url, method: .get, parameters: queryParameters, headers: headers).validate().responseDecodable(of: Actor.self) { response in
-                
-            guard let value = response.value else { return }
+        var component = URLComponents()
+        component.scheme = scheme
+        component.host = host
+        component.path = path
+        component.queryItems = [
+            URLQueryItem(name: "language", value: "en-US")
+        ]
+        
+        guard let url = component.url else { return }
+        
+        var requestURL = URLRequest(url: url)
+        
+        requestURL.httpMethod = "GET"
+        requestURL.addValue("application/json", forHTTPHeaderField: "accept")
+        requestURL.addValue(key, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { data, response, error in
             
-            resultActor(value)
-        }
+            if let _ = error {
+                print("ERROR")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                print("SERVER ERROR")
+                return
+            }
+            
+            if let data = data, let creditData = try? JSONDecoder().decode(Credit.self, from: data) {
+                resultCredit(creditData)
+                return
+            }
+            
+        }.resume()
+        
     }
     
-    func callSimilar(movieID: Int, resultSimilar: @escaping ([SimilarResult]) -> Void) {
-        let url = "https://api.themoviedb.org/3/movie/\(movieID)/similar"
-
-        AF.request(url, method: .get, parameters: similarParameters, headers: headers).validate().responseDecodable(of: Similar.self) { response in
+    func callSimilar(movieID: Int, resultSimilar: @escaping (Similar) -> Void) {
+        let path = "/3/movie/\(movieID)/similar"
+        
+        var component = URLComponents()
+        component.scheme = scheme
+        component.host = host
+        component.path = path
+        component.queryItems = [
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1")
+        ]
+        
+        guard let url = component.url else { return }
+        
+        var requestURL = URLRequest(url: url)
+        
+        requestURL.httpMethod = "GET"
+        requestURL.addValue("application/json", forHTTPHeaderField: "accept")
+        requestURL.addValue(key, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: requestURL) { data, response, error in
             
-            guard let value = response.value else { return }
-            resultSimilar(value.results)
-        }
+            if let _ = error {
+                print("ERROR")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                print("SERVER ERROR")
+                return
+            }
+            
+            if let data = data, let similarData = try? JSONDecoder().decode(Similar.self, from: data) {
+                resultSimilar(similarData)
+                return
+            }
+            
+        }.resume()
+        
     }
 }

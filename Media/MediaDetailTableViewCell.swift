@@ -8,19 +8,29 @@
 import UIKit
 import Kingfisher
 
-class MediaDetailTableViewCell: UITableViewCell {
+class MediaDetailTableViewCell: BaseTableViewCell {
         
-    @IBOutlet var actorImageView: UIImageView!
+    let actorImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleToFill
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 10
+        return view
+    }()
     
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var characterLabel: UILabel!
+    let nameLabel = {
+        let view = UILabel()
+        view.textColor = .black
+        view.font = .boldSystemFont(ofSize: 15)
+        return view
+    }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        designLabel()
-        designImageView()
-    }
+    let characterLabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 13)
+        view.textColor = .lightGray
+        return view
+    }()
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -28,15 +38,26 @@ class MediaDetailTableViewCell: UITableViewCell {
         actorImageView.image = nil
     }
     
-    func designLabel() {
-        nameLabel.font = .boldSystemFont(ofSize: 15)
-        characterLabel.font = .systemFont(ofSize: 13)
-        characterLabel.textColor = .lightGray
+    override func configureView() {
+        [actorImageView, nameLabel, characterLabel].forEach {
+            contentView.addSubview($0)
+        }
     }
     
-    func designImageView() {
-        actorImageView.layer.masksToBounds = true
-        actorImageView.layer.cornerRadius = 10
+    override func setConstraints() {
+        actorImageView.snp.makeConstraints { make in
+            make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(20)
+            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(10)
+            make.width.equalTo(actorImageView.snp.height).multipliedBy(0.6)
+        }
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(50)
+            make.leading.equalTo(actorImageView.snp.trailing).offset(20)
+        }
+        characterLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.leading.equalTo(nameLabel.snp.leading)
+        }
     }
     
     func configureCell(data: Cast) {
